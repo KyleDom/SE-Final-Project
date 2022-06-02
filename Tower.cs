@@ -62,16 +62,16 @@ public class Tower : MonoBehaviour
             case TargetPriority.Close:
                 {
                     Enemy closest = null;
-                    float dist = 99;
+                    float defaultDistance = 99;
 
                     for (int x = 0; x < curEnemiesInRange.Count; x++)
                     {
-                        float d = (transform.position - curEnemiesInRange[x].transform.position).sqrMagnitude;
+                        float distanceOfEnemy = (transform.position - curEnemiesInRange[x].transform.position).sqrMagnitude;
 
-                        if (d < dist)
+                        if (distanceOfEnemy < defaultDistance) //checks if closer 
                         {
                             closest = curEnemiesInRange[x];
-                            dist = d;
+                            defaultDistance = distanceOfEnemy;
                         }
                     }
                     return closest;
