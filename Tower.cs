@@ -95,4 +95,29 @@ public class Tower : MonoBehaviour
         }
         return null;
     }
+        void Attack()
+    {
+        if (rotateTowardsTarget){
+            transform.LookAt(curEnemy.transform);
+            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+        }
+        GameObject bullet = Instantiate(projectilePrefab, projectileSpawnPos.position, Quaternion.identity);
+        bullet.GetComponent<Projectile>().Initialize(curEnemy, projectileDamage, projectileSpeed);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            curEnemiesInRange.Add(other.GetComponent<Enemy>());
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            curEnemiesInRange.Remove(other.GetComponent<Enemy>());
+        }
+    }
 }
