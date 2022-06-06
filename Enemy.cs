@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour{
                 }
 
             void Heal(){
-                health += 10
+                health += 10;
             }
         
             if (prcnt <= 99){
