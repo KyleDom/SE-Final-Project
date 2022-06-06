@@ -22,7 +22,24 @@ public class Enemy : MonoBehaviour{
         healthBar.GetComponent<EnemyHealthBar>().Initialize(this);
     }
 
+    void PowerUps(){
+            float prcnt = Random.Range(0, 100);
+        
+            void Slow(){
+                moveSpeed -= 2;
+                }
+
+            void Heal(){
+                health += 10
+            }
+        
+            if (prcnt <= 99){
+            Slow() || Heal();
+            };
+        }
+
     void Update (){
         Move();
+        PowerUps();
     }
 }
