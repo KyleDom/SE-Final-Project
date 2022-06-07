@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
-    public int health;
+    public static int health;
     public int money;
     private bool gameActive;
 
@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     {
         gameActive = true;
         UpdateHealthAndMoneyText();
+        print(health);
     }
 
     void UpdateHealthAndMoneyText()

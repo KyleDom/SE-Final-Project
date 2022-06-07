@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour{
     public GameObject healthBarPrefab; 
 
     void Start (){
+        playerhp = GameManager.health
         path = GameManager.instance.enemyPath.waypoints;
         //creating the health bar
         Canvas canvas = FindObjectOfType<Canvas>();
@@ -30,7 +31,7 @@ public class Enemy : MonoBehaviour{
                 }
 
             void Heal(){
-                health += 10;
+                playerhp += 10;
             }
         
             if (prcnt <= 99){
