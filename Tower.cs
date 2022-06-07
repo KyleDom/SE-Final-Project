@@ -2,122 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tower : MonoBehaviour
+public abstract class Tower : MonoBehaviour 
 {
-    public enum TargetPriority
+     public enum TargetPriority
     {
         First,
         Close,
         Strong
     }
 
-    [Header("Info")]
+     [Header("Info")]
     public float range;
-    private List<Enemy> curEnemiesInRange = new List<Enemy>();
-    private Enemy curEnemy;
+    protected List<Enemy> currentEnemiesInRange = new List<Enemy>();
+    protected Enemy currentEnemy;
     public TargetPriority targetPriority;
     public bool rotateTowardsTarget;
 
     [Header("Attacking")]
     public float attackRate;
-    private float lastAttackTime;
+    protected float lastAttackTime;
     public GameObject projectilePrefab;
     public Transform projectileSpawnPos;
 
     public int projectileDamage;
     public float projectileSpeed;
 
-    void Update()
-    {
-        if (Time.time - lastAttackTime > attackRate)
-        {
-            lastAttackTime = Time.time;
-
-            curEnemy = GetEnemy();
-
-            if (curEnemy != null)
-            
-                Attack();
-            
-        }
-    }
-
-    Enemy GetEnemy()
-    {
-        curEnemiesInRange.RemoveAll(x => x == null);
-
-        if (curEnemiesInRange.Count == 0)
-            return null;
-
-        if (curEnemiesInRange.Count == 1)
-            return curEnemiesInRange[0];
-
-        switch (targetPriority)
-        {
-            case TargetPriority.First:
-                {
-                    return curEnemiesInRange[0];
-                }
-
-            case TargetPriority.Close:
-                {
-                    Enemy closest = null;
-                    float defaultDistance = 99;
-
-                    for (int x = 0; x < curEnemiesInRange.Count; x++)
-                    {
-                        float distanceOfEnemy = (transform.position - curEnemiesInRange[x].transform.position).sqrMagnitude;
-
-                        if (distanceOfEnemy < defaultDistance) //checks if closer 
-                        {
-                            closest = curEnemiesInRange[x];
-                            defaultDistance = distanceOfEnemy;
-                        }
-                    }
-                    return closest;
-                }
-
-            case TargetPriority.Strong:
-                {
-                    Enemy strongest = null;
-                    int strongestHealth = 0;
-
-                    foreach (Enemy enemy in curEnemiesInRange)     
-                    {
-                        if (enemy.health > strongestHealth)
-                        {
-                            strongest = enemy;
-                            strongestHealth = enemy.health;
-                        }
-                    }
-                    return strongest;
-                }
-        }
-        return null;
-    }
-        void Attack()
-    {
-        if (rotateTowardsTarget){
-            transform.LookAt(curEnemy.transform);
-            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-        }
-        GameObject bullet = Instantiate(projectilePrefab, projectileSpawnPos.position, Quaternion.identity);
-        bullet.GetComponent<Projectile>().Initialize(curEnemy, projectileDamage, projectileSpeed);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Enemy"))
-        {
-            curEnemiesInRange.Add(other.GetComponent<Enemy>());
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Enemy"))
-        {
-            curEnemiesInRange.Remove(other.GetComponent<Enemy>());
-        }
-    }
-}
+    protected abstract void Update();
+    protected abstract Enemy GetEnemy();
+    protected abstract void Attack();
+    protected abstract void OnTriggerEnter(Collider other);
+    protected abstract void OnTriggerExit(Collider other);
+} 
