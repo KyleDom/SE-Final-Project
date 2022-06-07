@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour{
     public GameObject healthBarPrefab; 
 
     void Start (){
+        playerhp = GameManager.health
         path = GameManager.instance.enemyPath.waypoints;
         //creating the health bar
         Canvas canvas = FindObjectOfType<Canvas>();
@@ -22,7 +23,24 @@ public class Enemy : MonoBehaviour{
         healthBar.GetComponent<EnemyHealthBar>().Initialize(this);
     }
 
+    void PowerUps(){
+            float prcnt = Random.Range(0, 100);
+        
+            void Slow(){
+                moveSpeed -= 2;
+                }
+
+            void Heal(){
+                playerhp += 10;
+            }
+        
+            if (prcnt <= 99){
+            Slow() || Heal();
+            };
+        }
+
     void Update (){
         Move();
+        PowerUps();
     }
 }
