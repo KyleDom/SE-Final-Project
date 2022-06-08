@@ -27,14 +27,14 @@ public class Enemy : MonoBehaviour{
             float prcnt = Random.Range(0, 100);
         
             void Slow(){
-                moveSpeed -= 2;
+                moveSpeed -= 1;
                 }
 
             void Heal(){
                 playerhp += 10;
             }
         
-            if (prcnt <= 99){
+            if (prcnt <= 5){
             Slow() || Heal();
             };
         }
