@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI healthAndMoneyText;
     public EnemyPath enemyPath;
     public TowerPlacement towerPlacement;
+    public EndScreenUI endScreen;
     public WaveSpawner waveSpawner;
 
     [Header("Events")]
@@ -21,11 +22,6 @@ public class GameManager : MonoBehaviour
 
     // Singleton
     public static GameManager instance;
-
-    void OnEnable ()
-    {
-        Enemy.OnDestroyed += OnEnemyDestroyed;
-    }
 
     void OnDisable ()
     {
@@ -43,9 +39,9 @@ public class GameManager : MonoBehaviour
         UpdateHealthAndMoneyText();
     }
 
-    void UpdateHealthAndMoneyText()
+    void UpdateHealthAndMoneyText ()
     {
-        healthAndMoneyText.text = $"Health: {health}\nCredit: {money}";
+        healthAndMoneyText.text = $"Health: {health}\nCredits: {money}";
     }
 
     public void AddMoney (int amount)
@@ -75,19 +71,31 @@ public class GameManager : MonoBehaviour
 
     void GameOver ()
     {
-       
+        gameActive = false;
+        endScreen.gameObject.SetActive(true);
+        endScreen.SetEndScreen(false, waveSpawner.curWave);
     }
 
     void WinGame ()
     {
-        
+        gameActive = false;
+        endScreen.gameObject.SetActive(true);
+        endScreen.SetEndScreen(true, waveSpawner.curWave);
     }
 
     public void OnEnemyDestroyed ()
     {
-        
+        if(!gameActive)
+            return;
+
+        if(waveSpawner.remainingEnemies == 0 && waveSpawner.curWave == waveSpawner.waves.Length)
+        {
+            WinGame();
+        }
     }
 }
+
+   
 
 
    
