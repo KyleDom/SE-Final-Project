@@ -11,11 +11,11 @@ void PowerUp(){
             float prcnt = Random.Range(0, 100);
         
             void Slow(){
-                enemySpeed -= 2;
+                enemySpeed -= 1;
                 }
 
             void Heal(){
-                playerhp += 100;
+                playerhp += 15;
             }
         
             if (prcnt <= 5){
