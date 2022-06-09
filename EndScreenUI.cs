@@ -13,7 +13,7 @@ public class EndScreenUI : MonoBehaviour
     public void SetEndScreen (bool didWin, int roundsSurvived)
     {
         if(didWin == true){
-            headerText.text = $"Mission Success! Congratulations!";
+            headerText.text = $"Mission Successful! Congratulations!";
             headerText.color = Color.green;
             bodyText.text = $"Mission Completed in {roundsSurvived} waves";
             bodyText.color = Color.yellow;
@@ -21,7 +21,7 @@ public class EndScreenUI : MonoBehaviour
         }else {
             headerText.text = $"Mission failed! Polluta has taken over!";
             headerText.color = Color.red;
-            bodyText.text = $"You survived {roundsSurvived} waves";
+            bodyText.text = $"You have survived {roundsSurvived} waves";
              bodyText.color = Color.yellow;
         }
         
